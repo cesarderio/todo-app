@@ -19,3 +19,7 @@ In Phase 1, we're going to perform some refactoring of a ToDo application built 
   - Add the sort word 'difficulty' by default.
 - Style the application using the [Mantine Component API](https://mantine.dev/pages/getting-started/){target:_blank}.
   - NOTE: The expectation to style this entire component in one day is likely unrealistic.  The recommendation is to implement the required functionality, then systematically begin styling with Mantine.  Match the comp image(s) as closely as possible. 80% of the design work will likely take 20% of your time. By the end of the week, being mostly there with style is the goal!
+
+test
+test
+test
