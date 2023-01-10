@@ -1,11 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import SettingsProvider from "./Context/Settings";
+import App from "./App";
+import ModeProvider from "./Context/Mode/classMode";
 
-import App from './App';
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <ModeProvider>
+      <SettingsProvider>
+        <App />
+      </SettingsProvider>
+    </ModeProvider>
   </React.StrictMode>
 );
