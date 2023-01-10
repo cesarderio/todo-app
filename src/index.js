@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import TodoProvider from "./Context/Settings";
+import SettingsProvider from "./Context/Settings";
 import App from "./App";
 import ModeProvider from "./Context/Mode/classMode";
 import { MantineProvider } from "@mantine/core";
@@ -10,9 +10,9 @@ root.render(
   <React.StrictMode>
     <MantineProvider withGlobalStyles withNormalizeCSS theme={{colorScheme: 'dark'}}>
       <ModeProvider>
-        <TodoProvider>
+        <SettingsProvider>
           <App />
-        </TodoProvider>
+        </SettingsProvider>
       </ModeProvider>
     </MantineProvider>
   </React.StrictMode>
