@@ -1,6 +1,7 @@
 # Context API
 
-![UML]('./src/assets/UML.png');
+![UML]('./src/assets/UML.png')
+[UML]('./src/assets/UML.png')
 
 **To Do List Manager Phase 1:** Incorporate configuration settings to the application.
 
