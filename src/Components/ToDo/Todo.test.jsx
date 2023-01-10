@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import ToDo from './index';
+import ToDo from './ToDo';
 
 describe('ToDo Component Tests', ()  => {
   test('render a header element as expected', () => {

@@ -1,24 +1,17 @@
-import React, { useContext } from 'react';
+import React from "react";
+import Header from "./Components/Header";
 
-import ToDo from './Components/ToDo/ToDo';
+import ToDo from "./Components/ToDo/ToDo";
 
-import './App.css';
+import "./App.css";
 
 const App = () => {
-
-
   return (
-  
+    <>
+      <Header />
       <ToDo />
-
+    </>
   );
-}
+};
 
 export default App;
-// export default class App extends React.Component {
-//   render() {
-//     return (
-//       <ToDo />
-//     );
-//   }
-// }

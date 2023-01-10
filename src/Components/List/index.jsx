@@ -14,8 +14,8 @@ const List = ({list, toggleComplete}) => {
   const listStart = pageItems * (page - 1); 
   const listEnd = listStart + pageItems;
   const pageCount = Math.ceil(listToRender.length / pageItems);
-  console.log(pageCount);
-  
+  // console.log(pageCount);
+
   const displayList = listToRender.slice(listStart, listEnd);
 
  return(
