@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import useForm from '../../hooks/form.js';
 
 import { v4 as uuid } from 'uuid';
+import { Button } from '@mantine/core';
+
 
 const ToDo = () => {
 
@@ -48,11 +50,11 @@ const ToDo = () => {
 
   return (
     <>
-      <header data-testid="todo-header">
-        <h1 data-testid="todo-h1">To Do List: {incomplete} items pending</h1>
+      <header className='todo-header' data-testid="todo-header">
+        <h1 className='todo-h1' data-testid="todo-h1">To Do List: {incomplete} items pending</h1>
       </header>
 
-      <form onSubmit={handleSubmit}>
+      <form className='todo-form' onSubmit={handleSubmit}>
 
         <h2>Add To Do Item</h2>
 
@@ -72,7 +74,11 @@ const ToDo = () => {
         </label>
 
         <label>
-          <button type="submit">Add Item</button>
+          <Button 
+            type='submit'
+            variant="gradient"
+            gradient={{ from: 'indigo', to: 'cyan', deg: 50 }}>Add Item</Button>
+          {/* <button type="submit">Add Item</button> */}
         </label>
       </form>
 

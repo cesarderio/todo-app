@@ -1,25 +1,30 @@
 import React, { useState } from 'react';
 
-export const SettingsContext = React.createContext();
+export const TodoContext = React.createContext();
 
-const SettingsProvider = ({ children }) => {
-  const [ title, setTitle ] = useState('Some todo Thing');
-  const [ description, setDescription ] = useState('Read Me');
-  const [ dueDate, setDueDate ] = useState('Due Date');
+const TodoProvider = ({ children }) => {
+  // const [ title, setTitle ] = useState('Some todo Thing');
+  // const [ description, setDescription ] = useState('Read Me');
+  // const [ dueDate, setDueDate ] = useState('Due Date');
+  const [ id, setId ] = useState('Id');
+  const [ text, setText ] = useState('Some todo Text');
+  const [ assignedTo, setassignedTo ] = useState('Assigned To:');
+  const [ difficulty, setDifficulty] = useState('Difficulty');
   
   
   const values = {
-    title,
-    description,
-    dueDate,
+    id,
+    text,
+    assignedTo,
+    difficulty,
   };
 
   return (
-    <SettingsContext.Provider value={values}>
+    <TodoContext.Provider value={values}>
       {children}
-    </SettingsContext.Provider>
+    </TodoContext.Provider>
   )
 
 };
 
-export default SettingsProvider;
+export default TodoProvider;

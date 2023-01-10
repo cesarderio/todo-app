@@ -1,14 +1,16 @@
 import React, { useContext } from 'react';
 
 import ToDo from './Components/ToDo/ToDo';
-import { SettingsContext } from './Context/Settings';
-
+import { TodoContext } from './Context/Settings';
+import './App.css';
 
 const App = () => {
-  const { title, description, dueDate } = useContext(SettingsContext)
+  const { text, assignedTo, difficulty } = useContext(TodoContext)
 
   return (
-    <ToDo />
+  
+      <ToDo />
+
   );
 }
 
