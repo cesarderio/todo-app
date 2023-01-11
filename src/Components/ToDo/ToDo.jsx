@@ -1,13 +1,33 @@
 import React, { useContext, useEffect, useState } from "react";
 import useForm from "../../hooks/form.js";
-
+// import TodoHeader from "../TodoHeader/index.jsx";
 import { v4 as uuid } from "uuid";
-import { Button } from "@mantine/core";
+import { Button, Card } from "@mantine/core";
 import List from "../List";
 import { SettingsContext } from "../../Context/Settings/index.jsx";
+import { Text, createStyles } from "@mantine/core";
+
+const useStyle = createStyles((theme) => ({
+  todoHeader: {
+    backgroundColor: theme.colors.gray[8],
+    padding: theme.spacing.sm,
+    // margin: theme.spacing.md,
+    color: theme.colors.gray[0],
+  },
+  todoForm: {
+    display: "flex",
+    justifyContent: "grid",
+    padding: theme.spacing.sm,
+    margin: theme.spacing.md,
+  },
+  todoPage: {
+    padding: theme.spacing.xl,
+    margin: theme.spacing.xl,
+  },
+}));
 
 const ToDo = () => {
-  const { showComplete, pageItems, sort } = useContext(SettingsContext);
+  const { showComplete, pageItems, sort, addItemss } = useContext(SettingsContext);
   console.log("todo: ", showComplete, pageItems, sort);
 
   const [defaultValues] = useState({
@@ -49,51 +69,60 @@ const ToDo = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [list]);
 
+  const { classes } = useStyle();
+
   return (
     <>
-      <header className="todo-header" data-testid="todo-header">
-        <h1 className="todo-h1" data-testid="todo-h1">
-          To Do List: {incomplete} items pending
-        </h1>
-      </header>
+      <div className={classes.todoPage}>
+        <header className={classes.todoHeader} data-testid="todo-header">
+          <h1 className="todo-h1" data-testid="todo-h1">
+            To Do List: {incomplete} items pending
+          </h1>
+        </header>
+        {/* <Card w="55%" withBorder> */}
+          <form className={classes.todoForm} onSubmit={handleSubmit}>
+            <h2>Add To Do Item</h2>
 
-      <form className="todo-form" onSubmit={handleSubmit}>
-        <h2>Add To Do Item</h2>
+            <label>
+              <span>To Do Item</span>
+              <input onChange={handleChange} name="text" type="text" placeholder="Item Details" />
+            </label>
 
-        <label>
-          <span>To Do Item</span>
-          <input onChange={handleChange} name="text" type="text" placeholder="Item Details" />
-        </label>
+            <label>
+              <span>Assigned To</span>
+              <input
+                onChange={handleChange}
+                name="assignee"
+                type="text"
+                placeholder="Assignee Name"
+              />
+            </label>
 
-        <label>
-          <span>Assigned To</span>
-          <input onChange={handleChange} name="assignee" type="text" placeholder="Assignee Name" />
-        </label>
+            <label>
+              <span>Difficulty</span>
+              <input
+                onChange={handleChange}
+                defaultValue={defaultValues.difficulty}
+                type="range"
+                min={1}
+                max={5}
+                name="difficulty"
+              />
+            </label>
 
-        <label>
-          <span>Difficulty</span>
-          <input
-            onChange={handleChange}
-            defaultValue={defaultValues.difficulty}
-            type="range"
-            min={1}
-            max={5}
-            name="difficulty"
-          />
-        </label>
+            <label>
+              <Button
+                type="submit" onChange={(e) => addItem(e.target.value)}
+              >
+                Add Item
+              </Button>
+              {/* <button type="submit">Add Item</button> */}
+            </label>
+          </form>
+        {/* </Card> */}
 
-        <label>
-          <Button
-            type="submit"
-            variant="gradient"
-            gradient={{ from: "indigo", to: "cyan", deg: 50 }}>
-            Add Item
-          </Button>
-          {/* <button type="submit">Add Item</button> */}
-        </label>
-      </form>
-
-      <List list={list} toggleComplete={toggleComplete} />
+        <List w="50%" list={list} toggleComplete={toggleComplete} />
+      </div>
     </>
   );
 };
