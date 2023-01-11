@@ -1,4 +1,7 @@
 import { Text, createStyles } from "@mantine/core";
+import { Router, Routes, Route, Link } from "react-router-dom";
+import Home from "../ToDo/ToDo"
+import Settings from "../SettingsRoute"
 
 const navBarStyle = createStyles((theme) => ({
   navBar: {
@@ -14,16 +17,22 @@ const NavBar = () => {
 
   return (
     <>
-    <div className={classes.navBar}>
-{/* <Home></Home> */}
-{/* <Settings></Settings> */}
-      <h1 >
-        <Text>Home</Text>
-      </h1>
-      <h1>
-        <Text>Settings</Text>
-      </h1>
-    </div>
+      {/* <Router> */}
+        <div className={classes.navBar}>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/settings">Settings</Link>
+            </li>
+          </ul>
+          <Routes>
+            <Route exact path="/" element={< Home />}></Route>
+            <Route exact path="/settings" element={< Settings />}></Route>
+          </Routes>
+       </div>
+      {/* </Router> */}
     </>
   );
 };
