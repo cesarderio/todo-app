@@ -10,11 +10,9 @@ const List = ({list, toggleComplete}) => {
 
   // pagination
   const listToRender = showCompleted ? list : list.filter(item => !item.complete);
-  // console.log(listToRender)
   const listStart = pageItems * (page - 1); 
   const listEnd = listStart + pageItems;
   const pageCount = Math.ceil(listToRender.length / pageItems);
-  // console.log(pageCount);
 
   const displayList = listToRender.slice(listStart, listEnd);
 

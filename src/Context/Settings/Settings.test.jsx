@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import SettingsProvider,{ SettingsContext } from '.'; { SettingsContext } from './index';
+import SettingsProvider, { SettingsContext } from './index'; 
 
 describe('Settings context', ()  => {
   test('initial state loads as expected', () => {
@@ -8,7 +8,7 @@ describe('Settings context', ()  => {
       <SettingsProvider>
         <SettingsContext.Consumer>
           {
-            ({showComplete, pageItemas, sort}) => (
+            ({showComplete, pageItems, sort}) => (
               <ul>
                 <li data-testid="show-complete">{showComplete.toString()}</li>
                 <li data-testid="page-items">{pageItems}</li>
@@ -20,11 +20,12 @@ describe('Settings context', ()  => {
           </SettingsProvider>
       );
 
-    let showComplete = screen.getByTestId('show-complete');
-    let pageItems = screen.getByTestId('page-items');
+    let completedLi = screen.getByTestId('show-complete');
+    let pageItemsLi = screen.getByTestId('page-items');
+    let sortLi = screen.getByTestId('sort');
 
-    expect(showComplete).toBeTruthy();
-    expect(pageItems).toBeInTheDocument();
-    expect(h1).toHaveTextContent('To Do List: 0 items pending');
+    expect(completedLi).toHaveTextContent('false');
+    expect(pageItemsLi).toHaveTextContent('3');
+    expect(sortLi).toHaveTextContent('difficulty');
   })
 })

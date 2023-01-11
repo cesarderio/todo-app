@@ -1,15 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react';
-import useForm from '../../hooks/form.js';
+import React, { useContext, useEffect, useState } from "react";
+import useForm from "../../hooks/form.js";
 
-import { v4 as uuid } from 'uuid';
-import { Button } from '@mantine/core';
-import List from '../List';
-import { SettingsContext } from '../../Context/Settings/index.jsx';
+import { v4 as uuid } from "uuid";
+import { Button } from "@mantine/core";
+import List from "../List";
+import { SettingsContext } from "../../Context/Settings/index.jsx";
 
 const ToDo = () => {
-
   const { showComplete, pageItems, sort } = useContext(SettingsContext);
-  console.log('todo: ',showComplete, pageItems, sort);
+  console.log("todo: ", showComplete, pageItems, sort);
 
   const [defaultValues] = useState({
     difficulty: 4,
@@ -26,40 +25,39 @@ const ToDo = () => {
   }
 
   function deleteItem(id) {
-    const items = list.filter( item => item.id !== id );
+    const items = list.filter((item) => item.id !== id);
     setList(items);
   }
 
   function toggleComplete(id) {
-
-    const items = list.map( item => {
-      if ( item.id === id ) {
-        item.complete = ! item.complete;
+    const items = list.map((item) => {
+      if (item.id === id) {
+        item.complete = !item.complete;
       }
       return item;
     });
 
     setList(items);
-
   }
 
   useEffect(() => {
-    let incompleteCount = list.filter(item => !item.complete).length;
+    let incompleteCount = list.filter((item) => !item.complete).length;
     setIncomplete(incompleteCount);
     document.title = `To Do List: ${incomplete}`;
-    // linter will want 'incomplete' added to dependency array unnecessarily. 
-    // disable code used to avoid linter warning 
-    // eslint-disable-next-line react-hooks/exhaustive-deps 
-  }, [list]);  
+    // linter will want 'incomplete' added to dependency array unnecessarily.
+    // disable code used to avoid linter warning
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [list]);
 
   return (
     <>
-      <header className='todo-header' data-testid="todo-header">
-        <h1 className='todo-h1' data-testid="todo-h1">To Do List: {incomplete} items pending</h1>
+      <header className="todo-header" data-testid="todo-header">
+        <h1 className="todo-h1" data-testid="todo-h1">
+          To Do List: {incomplete} items pending
+        </h1>
       </header>
 
-      <form className='todo-form' onSubmit={handleSubmit}>
-
+      <form className="todo-form" onSubmit={handleSubmit}>
         <h2>Add To Do Item</h2>
 
         <label>
@@ -74,20 +72,28 @@ const ToDo = () => {
 
         <label>
           <span>Difficulty</span>
-          <input onChange={handleChange} defaultValue={defaultValues.difficulty} type="range" min={1} max={5} name="difficulty" />
+          <input
+            onChange={handleChange}
+            defaultValue={defaultValues.difficulty}
+            type="range"
+            min={1}
+            max={5}
+            name="difficulty"
+          />
         </label>
 
         <label>
-          <Button 
-            type='submit'
+          <Button
+            type="submit"
             variant="gradient"
-            gradient={{ from: 'indigo', to: 'cyan', deg: 50 }}>Add Item</Button>
+            gradient={{ from: "indigo", to: "cyan", deg: 50 }}>
+            Add Item
+          </Button>
           {/* <button type="submit">Add Item</button> */}
         </label>
       </form>
 
-< List list={list} toggleComplete={false}/>
-
+      <List list={list} toggleComplete={toggleComplete} />
     </>
   );
 };

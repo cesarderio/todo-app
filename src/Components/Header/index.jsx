@@ -1,6 +1,6 @@
 import { Text, createStyles } from "@mantine/core";
 
-const useStyles = createStyles((theme) => ({
+const headerStyle = createStyles((theme) => ({
   header: {
     backgroundColor: theme.colors.blue[7],
     padding: theme.spacing.md,
@@ -12,7 +12,7 @@ const useStyles = createStyles((theme) => ({
 
 const Header = () => {
 
-const { classes } = useStyles();
+const { classes } = headerStyle();
 
   return(
     <>
