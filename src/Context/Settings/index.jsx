@@ -1,30 +1,38 @@
 import React, { useState } from 'react';
 
-export const TodoContext = React.createContext();
+// export const TodoContext = React.createContext();
+export const SettingsContext = React.createContext();
 
-const TodoProvider = ({ children }) => {
-  // const [ title, setTitle ] = useState('Some todo Thing');
-  // const [ description, setDescription ] = useState('Read Me');
-  // const [ dueDate, setDueDate ] = useState('Due Date');
-  const [ id, setId ] = useState('Id');
-  const [ text, setText ] = useState('Some todo Text');
-  const [ assignedTo, setassignedTo ] = useState('Assigned To:');
-  const [ difficulty, setDifficulty] = useState('Difficulty');
-  
-  
+const SettingsProvider = ({ children }) => {
+  const [ showComplete, setShowComplete ] = useState(false);
+  const [ pageItems, setPageItems ] = useState(3);
+  const [ sort, setSort ] = useState('difficulty');
+  const [itemsSet, setItems] = useState([{text: 'Clean', assignee: 'Raphael'}])
+
+  const addItemss = (item) => {
+    
+    if(item && item.text && item.assignee){
+      setItems([...itemsSet, item]);
+    } else{
+      console.log('Invalid Task! Add a title and assignee');
+    }
+  }
+
   const values = {
-    id,
-    text,
-    assignedTo,
-    difficulty,
+    showComplete,
+    pageItems,
+    sort,
+    setShowComplete,
+    itemsSet,
+    addItemss
   };
 
   return (
-    <TodoContext.Provider value={values}>
+    <SettingsContext.Provider value={values}>
       {children}
-    </TodoContext.Provider>
+    </SettingsContext.Provider>
   )
 
 };
 
-export default TodoProvider;
+export default SettingsProvider;
