@@ -5,7 +5,7 @@ import { v4 as uuid } from "uuid";
 import { Button, Card, createStyles, Grid, Group, Slider, Text, TextInput } from "@mantine/core";
 import List from "../List";
 import { SettingsContext } from "../../Context/Settings/index.jsx";
-
+import Auth from "../Auth/index.jsx";
 
 const useStyle = createStyles((theme) => ({
   todoHeader: {
@@ -83,44 +83,46 @@ const ToDo = () => {
       <h1 className={classes.todoHeader} data-testid="todo-header">
         To Do List: {incomplete} items pending
       </h1>
-      <Group >
+      <Group>
         <Grid style={{ width: "80%", margin: "auto" }}>
-          <Grid.Col xs={12} sm={4}>
-            <Card withBorder p="sm">
-              <form className={classes.todoForm} onSubmit={handleSubmit}>
-                <h2>Add To Do Item</h2>
-                <TextInput
-                  name="text"
-                  placeholder="Item Details"
-                  onChange={handleChange}
-                  label="Todo Item"
-                />
-                <TextInput
-                  name="assignee"
-                  placeholder="Assignee Name"
-                  onChange={handleChange}
-                  label="Assigned To"
-                />
-                <Text>Difficulty</Text>
-                <Slider
-                  name="Difficulty"
-                  onChange={handleChange}
-                  min={1}
-                  max={5}
-                  step={1}
-                  defaultValue={defaultValues.difficulty}
-                />
+          <Auth>
+            <Grid.Col xs={12} sm={4}>
+              <Card withBorder p="sm">
+                <form className={classes.todoForm} onSubmit={handleSubmit}>
+                  <h2>Add To Do Item</h2>
+                  <TextInput
+                    name="text"
+                    placeholder="Item Details"
+                    onChange={handleChange}
+                    label="Todo Item"
+                  />
+                  <TextInput
+                    name="assignee"
+                    placeholder="Assignee Name"
+                    onChange={handleChange}
+                    label="Assigned To"
+                  />
+                  <Text>Difficulty</Text>
+                  <Slider
+                    name="Difficulty"
+                    onChange={handleChange}
+                    min={1}
+                    max={5}
+                    step={1}
+                    defaultValue={defaultValues.difficulty}
+                  />
 
-                <Button type="submit" onChange={(e) => addItem(e.target.value)}>
-                  Add Item
-                </Button>
-              </form>
-            </Card>
-          </Grid.Col>
-          <Grid.Col xs={12} sm={8}>
-            {/* <Card withBorder></Card> */}
-            <List w="50%" list={list} toggleComplete={toggleComplete} />
-          </Grid.Col>
+                  <Button type="submit" onChange={(e) => addItem(e.target.value)}>
+                    Add Item
+                  </Button>
+                </form>
+              </Card>
+            </Grid.Col>
+            <Grid.Col xs={12} sm={8}>
+              {/* <Card withBorder></Card> */}
+              <List w="50%" list={list} toggleComplete={toggleComplete} />
+            </Grid.Col>
+          </Auth>
         </Grid>
       </Group>
     </>

@@ -3,7 +3,7 @@ import { AuthContext } from "../../Context/Auth";
 import { When } from 'react-if';
 
 
-const Auth = (capability, children) => {
+const Auth = ({capability, children}) => {
   const { isLoggedIn, can } = useContext(AuthContext);
 
   return(

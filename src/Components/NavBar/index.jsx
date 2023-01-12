@@ -6,6 +6,7 @@ import { AuthContext } from "../../Context/Auth";
 // import Home from "../ToDo/ToDo"
 // import Settings from "../SettingsRoute"
 // import { When } from "react-if";
+import Login from "../Login";
 
 const navBarStyle = createStyles((theme) => ({
   navBar: {
@@ -44,7 +45,8 @@ console.log('user', user)
           </Link>
         </Group>
         <Group position="right">
-          <form onSubmit={handleLogin}>
+          <Login />
+          {/* <form onSubmit={handleLogin}>
             <label>
               Username
               <input onChange={(e) => setUsername(e.target.value)} />
@@ -55,7 +57,7 @@ console.log('user', user)
             </label>
             <Button type="submit">Login</Button>
           </form>
-          <Button onClick={logout}>Logout</Button>
+          <Button onClick={logout}>Logout</Button> */}
         </Group>
       </Group>
     </>
