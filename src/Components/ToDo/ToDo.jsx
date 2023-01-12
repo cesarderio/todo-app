@@ -2,32 +2,33 @@ import React, { useContext, useEffect, useState } from "react";
 import useForm from "../../hooks/form.js";
 // import TodoHeader from "../TodoHeader/index.jsx";
 import { v4 as uuid } from "uuid";
-import { Button, Card } from "@mantine/core";
+import { Button, Card, createStyles, Grid, Group, Slider, Text, TextInput } from "@mantine/core";
 import List from "../List";
 import { SettingsContext } from "../../Context/Settings/index.jsx";
-import { Text, createStyles } from "@mantine/core";
+
 
 const useStyle = createStyles((theme) => ({
   todoHeader: {
     backgroundColor: theme.colors.gray[8],
-    padding: theme.spacing.sm,
-    // margin: theme.spacing.md,
     color: theme.colors.gray[0],
+    width: "80%",
+    margin: "auto",
+    fontSize: theme.fontSizes.lg,
+    padding: theme.spacing.sm,
+    marginBottom: theme.spacing.md,
+    marginTop: theme.spacing.md,
   },
   todoForm: {
-    display: "flex",
-    justifyContent: "grid",
-    padding: theme.spacing.sm,
-    margin: theme.spacing.md,
-  },
-  todoPage: {
-    padding: theme.spacing.xl,
-    margin: theme.spacing.xl,
+    marginBottom: theme.spacing.md,
+    marginTop: theme.spacing.xl,
+    // padding: theme.spacing.md,
   },
 }));
 
 const ToDo = () => {
-  const { showComplete, pageItems, sort, addItemss } = useContext(SettingsContext);
+  // const { showComplete, setShowComplete, pageItems, setPageItems, sort, setSort, saveLocally } =
+  // useContext(SettingsContext);
+  const { setShow, showComplete, pageItems, sort, saveLocally } = useContext(SettingsContext);
   console.log("todo: ", showComplete, pageItems, sort);
 
   const [defaultValues] = useState({
@@ -71,58 +72,57 @@ const ToDo = () => {
 
   const { classes } = useStyle();
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   setShow(true)
+  //   saveLocally();
+  // };
+
   return (
     <>
-      <div className={classes.todoPage}>
-        <header className={classes.todoHeader} data-testid="todo-header">
-          <h1 className="todo-h1" data-testid="todo-h1">
-            To Do List: {incomplete} items pending
-          </h1>
-        </header>
-        {/* <Card w="55%" withBorder> */}
-          <form className={classes.todoForm} onSubmit={handleSubmit}>
-            <h2>Add To Do Item</h2>
+      <h1 className={classes.todoHeader} data-testid="todo-header">
+        To Do List: {incomplete} items pending
+      </h1>
+      <Group >
+        <Grid style={{ width: "80%", margin: "auto" }}>
+          <Grid.Col xs={12} sm={4}>
+            <Card withBorder p="sm">
+              <form className={classes.todoForm} onSubmit={handleSubmit}>
+                <h2>Add To Do Item</h2>
+                <TextInput
+                  name="text"
+                  placeholder="Item Details"
+                  onChange={handleChange}
+                  label="Todo Item"
+                />
+                <TextInput
+                  name="assignee"
+                  placeholder="Assignee Name"
+                  onChange={handleChange}
+                  label="Assigned To"
+                />
+                <Text>Difficulty</Text>
+                <Slider
+                  name="Difficulty"
+                  onChange={handleChange}
+                  min={1}
+                  max={5}
+                  step={1}
+                  defaultValue={defaultValues.difficulty}
+                />
 
-            <label>
-              <span>To Do Item</span>
-              <input onChange={handleChange} name="text" type="text" placeholder="Item Details" />
-            </label>
-
-            <label>
-              <span>Assigned To</span>
-              <input
-                onChange={handleChange}
-                name="assignee"
-                type="text"
-                placeholder="Assignee Name"
-              />
-            </label>
-
-            <label>
-              <span>Difficulty</span>
-              <input
-                onChange={handleChange}
-                defaultValue={defaultValues.difficulty}
-                type="range"
-                min={1}
-                max={5}
-                name="difficulty"
-              />
-            </label>
-
-            <label>
-              <Button
-                type="submit" onChange={(e) => addItem(e.target.value)}
-              >
-                Add Item
-              </Button>
-              {/* <button type="submit">Add Item</button> */}
-            </label>
-          </form>
-        {/* </Card> */}
-
-        <List w="50%" list={list} toggleComplete={toggleComplete} />
-      </div>
+                <Button type="submit" onChange={(e) => addItem(e.target.value)}>
+                  Add Item
+                </Button>
+              </form>
+            </Card>
+          </Grid.Col>
+          <Grid.Col xs={12} sm={8}>
+            {/* <Card withBorder></Card> */}
+            <List w="50%" list={list} toggleComplete={toggleComplete} />
+          </Grid.Col>
+        </Grid>
+      </Group>
     </>
   );
 };
