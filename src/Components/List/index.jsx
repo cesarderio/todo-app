@@ -1,4 +1,4 @@
-import { Button, Pagination } from '@mantine/core';
+import { Button, Group, Pagination } from '@mantine/core';
 import { useContext, useState } from 'react';
 import { SettingsContext } from '../../Context/Settings';
 import { createStyles } from "@mantine/core";
@@ -37,16 +37,19 @@ const List = ({list, toggleComplete}) => {
   {displayList.map(item => (
     <div key={item.id} className={classes.listStyle}>
       <ul>
-        <li key={`list-${item}`}>{item.text}, {`difficulty: ${item.difficulty}`}</li>
+        <li key={`list-${item}`}>
+          <Group position='apart'>
+            <Group>
+          {item.text} 
+            </Group>
+            <Group position='right'>
+          {`difficulty: ${item.difficulty}`}
+            </Group>
+            
+          </Group>
+          </li>
       </ul>
-
-      {/* <p>{item.text}</p>
-      <p><small>Assigned to: {item.assignee}</small></p>
-      <p><small>Difficulty: {item.difficulty}</small></p> */}
-      <label>
-        <Button size='lg' onClick={() => toggleComplete(item.id)}>Pending</Button>
-      </label>
-      {/* <div onClick={() => toggleComplete(item.id)}>Complete: {item.complete.toString()}</div> */}
+        <Button onClick={() => toggleComplete(item.id)}>Pending</Button>
       <hr />
     </div>
   ))}
