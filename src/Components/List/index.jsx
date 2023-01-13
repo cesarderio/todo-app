@@ -2,7 +2,7 @@ import { Button, Group, Pagination } from '@mantine/core';
 import { useContext, useState } from 'react';
 import { SettingsContext } from '../../Context/Settings';
 import { createStyles } from "@mantine/core";
-
+import { Else, If } from 'react-if';
 
 const useStyle = createStyles((theme) => ({
   listStyle: {
@@ -12,9 +12,6 @@ const useStyle = createStyles((theme) => ({
   },
 
 }));
-
-
-
 
 const List = ({list, toggleComplete}) => {
 
@@ -49,7 +46,13 @@ const List = ({list, toggleComplete}) => {
           </Group>
           </li>
       </ul>
-        <Button onClick={() => toggleComplete(item.id)}>Pending</Button>
+      <If condition={!item.complete}>
+      <Button size='xs' radius='45px' color='green' onClick={() => toggleComplete(item.id)}>Pending</Button>
+        <Else>
+        <Button onClick={() => toggleComplete(item.id)}>Complete</Button>
+        </Else>
+      </If>
+        {/* <Button onClick={() => toggleComplete(item.id)}>Pending</Button> */}
       <hr />
     </div>
   ))}

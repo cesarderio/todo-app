@@ -34,11 +34,11 @@ const SettingsForm = () => {
   const { showComplete, setShowComplete, pageItems, setPageItems, sort, setSort, saveLocally } =
     useContext(SettingsContext);
 
-    const { classes } = useStyles();
+  const { classes } = useStyles();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setShow(true)
+    setShow(true);
     saveLocally();
   };
 
@@ -47,38 +47,34 @@ const SettingsForm = () => {
       <h1 className={classes.h1}>
         <IconSettings /> Manage Settings
       </h1>
-      <Grid style={{ padding:"10px", width: "80%", margin: "auto" }}>
+      <Grid style={{ padding: "10px", width: "80%", margin: "auto" }}>
         <Grid.Col xs={12} sm={6}>
           <Card withBorder p="sm">
-         
-              <Text>Updated Settings</Text>
-              <form onSubmit={handleSubmit}>
-                <Switch
-                  label="Show Completed Todos"
-                  checked={showComplete}
-                  onChange={(event) => setShowComplete(event.currentTarget.checked)}
-                />
-                <NumberInput
-                  mb="sm"
-                  value={pageItems}
-                  label="Items Per Page"
-                  onChange={(value) => setPageItems(value)}
-                />
-                <TextInput
-                  mb="sm"
-                  placeholder={sort}
-                  onChange={(e) => setSort(e.target.value)}
-                  label="Sort Keyword"
-                />
-                <Button type="submit" >Show New Settings</Button>
-              </form>
-         
+            <Text>Updated Settings</Text>
+            <form onSubmit={handleSubmit}>
+              <Switch
+                label="Show Completed Todos"
+                checked={showComplete}
+                onChange={(event) => setShowComplete(event.currentTarget.checked)}
+              />
+              <NumberInput
+                mb="sm"
+                value={pageItems}
+                label="Items Per Page"
+                onChange={(value) => setPageItems(value)}
+              />
+              <TextInput
+                mb="sm"
+                placeholder={sort}
+                onChange={(e) => setSort(e.target.value)}
+                label="Sort Keyword"
+              />
+              <Button type="submit">Show New Settings</Button>
+            </form>
           </Card>
         </Grid.Col>
         <Grid.Col xs={12} sm={6}>
-          <Card>
-            {/* conditionally render settings changes here */}
-          </Card>
+          <Card>{/* conditionally render settings changes here */}</Card>
         </Grid.Col>
       </Grid>
     </>

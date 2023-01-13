@@ -37,3 +37,34 @@ testing testing
 - As a user, I want to ensure that only fellow users that are allowed to “update”, based on their user type, can mark To Do Items complete.
 
 - As a user, I want to ensure that only fellow users that are allowed to “delete”, based on their user type, can delete new To Do Items.
+
+
+
+
+
+
+
+//------
+
+Note: hit the signin route with the following information and receive token
+- Admin Access:
+```javascript
+{
+    "username": "admin",
+    "password": "ADMIN"
+}
+```
+- Editor Access:
+```javascript
+{
+    "username": "editor",
+    "password": "EDITOR"
+}
+```
+- Guest Access:
+```javascript
+{
+    "username": "user",
+    "password": "USER"
+}
+```
