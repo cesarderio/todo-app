@@ -12,6 +12,7 @@ import {
 } from "@mantine/core";
 import { IconSettings } from "@tabler/icons";
 import { SettingsContext } from "../../Context/Settings";
+import { When } from "react-if";
 
 const useStyles = createStyles((theme) => ({
   h1: {
@@ -74,6 +75,16 @@ const SettingsForm = () => {
           </Card>
         </Grid.Col>
         <Grid.Col xs={12} sm={6}>
+          <When condition={show}>
+          <Card withBorder p="sm">
+            <Card.Section>
+              <Text m="xl" fontSize="xl" weight="bold">Updated Settings</Text>
+            </Card.Section>
+            <Text m="sm">{showComplete ? 'Show' : 'Hide'} Completed Todos</Text>
+            <Text m="sm">Items Per Page {pageItems}</Text>
+            <Text m="sm">Sort Keyword: {sort}</Text>
+          </Card>
+          </When>
           <Card>{/* conditionally render settings changes here */}</Card>
         </Grid.Col>
       </Grid>

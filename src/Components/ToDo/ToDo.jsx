@@ -42,9 +42,7 @@ const ToDo = () => {
   // const { handleChange, handleSubmit } = useForm(addItem, defaultValues);
   const { handleChange, handleSubmit } = useForm(addItem, defaultValues);
 
-
-
-    // const ApiList = async (username, password) => {
+  // const ApiList = async (username, password) => {
   //   let ApiListConfig = {
   //     baseURL: "https://api-js401.herokuapp.com",
   //     url: "/get",
@@ -64,18 +62,18 @@ const ToDo = () => {
   // }
 
   function addItem(item, username, password) {
-        let addItemConfig = {
+    let addItemConfig = {
       baseURL: "https://api-js401.herokuapp.com/api/v1/todo",
       url: "/post",
       method: "post",
       auth: { username, password },
-    }
+    };
     let response = axios.post(addItemConfig);
-  // }
+    // }
     // return axios.post()
-  //   item.id = uuid();
-  //   item.complete = false;
-  //   console.log(item);
+    //   item.id = uuid();
+    //   item.complete = false;
+    //   console.log(item);
     setList([...list, item]);
   }
   // function deleteItem(id, username, password){
@@ -136,7 +134,7 @@ const ToDo = () => {
       </h1>
       <Group>
         <Grid style={{ width: "80%", margin: "auto" }}>
-          <Auth capability='create'>
+          <Auth capability="create">
             <Grid.Col xs={12} sm={4}>
               <Card withBorder p="sm">
                 <form className={classes.todoForm} onSubmit={handleSubmit}>
@@ -169,9 +167,10 @@ const ToDo = () => {
                 </form>
               </Card>
             </Grid.Col>
+          </Auth>
+          <Auth capability="read">
             <Grid.Col xs={12} sm={8}>
-              {/* <Card withBorder></Card> */}
-              <List  list={list} toggleComplete={toggleComplete} />
+              <List list={list} toggleComplete={toggleComplete} deleteItem={deleteItem} />
             </Grid.Col>
           </Auth>
         </Grid>

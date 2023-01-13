@@ -1,8 +1,10 @@
-import { Button, Group, Pagination } from '@mantine/core';
-import { useContext, useState } from 'react';
-import { SettingsContext } from '../../Context/Settings';
+import { Badge, Button, Card, CloseButton, Group, Pagination, Text } from "@mantine/core";
+import { useContext, useState } from "react";
+import { SettingsContext } from "../../Context/Settings";
 import { createStyles } from "@mantine/core";
-import { Else, If } from 'react-if';
+import { Else, If, Then } from "react-if";
+import { AuthContext } from "../../Context/Auth";
+import Auth from "../Auth";
 
 const useStyle = createStyles((theme) => ({
   listStyle: {
@@ -10,55 +12,65 @@ const useStyle = createStyles((theme) => ({
     // margin: theme.spacing.md,
     // fontSize: theme.fontSizes.sm,
   },
-
 }));
 
-const List = ({list, toggleComplete}) => {
-
-
-  const { showCompleted, pageItems } = useContext(SettingsContext);
+const List = ({ list, toggleComplete, deleteItem }) => {
+  const { can, isLoggedIn } = useContext(AuthContext);
+  const { showComplete, pageItems } = useContext(SettingsContext);
   const [page, setPage] = useState(1);
 
   // pagination
-  const listToRender = showCompleted ? list : list.filter(item => !item.complete);
-  const listStart = pageItems * (page - 1); 
+  const listToRender = showComplete ? list : list.filter((item) => !item.complete);
+  const listStart = pageItems * (page - 1);
   const listEnd = listStart + pageItems;
   const pageCount = Math.ceil(listToRender.length / pageItems);
 
   const displayList = listToRender.slice(listStart, listEnd);
-  
+
   const { classes } = useStyle();
 
- return(
-  <>
-  {displayList.map(item => (
-    <div key={item.id} className={classes.listStyle}>
-      <ul>
-        <li key={`list-${item}`}>
-          <Group position='apart'>
-            <Group>
-          {item.text} 
+  return (
+    <>
+      {displayList.map(item => (
+        <Card key={item.id} withBorder shadow="md" mb="sm">
+          <Card.Section withBorder>
+            <Group position="apart">
+              <Group>
+                <If condition={isLoggedIn && can("update")}>
+                  <Then>
+                    <Badge
+                      color={item.complete ? "red" : "green"}
+                      variant="filled"
+                      onClick={() => toggleComplete(item.id)}
+                      m="3px">
+                      {item.complete ? "Complete" : "Pending"}
+                    </Badge>
+                  </Then>
+                  <Else>
+                    <Badge
+                      color={item.complete ? "red" : "green"}
+                      variant="filled"
+                      m="3px">
+                      {item.complete ? "Complete" : "Pending"}
+                    </Badge>
+                  </Else>
+                </If>
+                <Text>{item.assignee}</Text>
+              </Group>
+              <Auth capability="delete">
+
+                  <CloseButton title="Close Todo Item" onClick={() => deleteItem(item.id)} />
+ 
+              </Auth>
             </Group>
-            <Group position='right'>
-          {`difficulty: ${item.difficulty}`}
-            </Group>
-            
-          </Group>
-          </li>
-      </ul>
-      <If condition={!item.complete}>
-      <Button size='xs' radius='45px' color='green' onClick={() => toggleComplete(item.id)}>Pending</Button>
-        <Else>
-        <Button onClick={() => toggleComplete(item.id)}>Complete</Button>
-        </Else>
-      </If>
-        {/* <Button onClick={() => toggleComplete(item.id)}>Pending</Button> */}
-      <hr />
-    </div>
-  ))}
-  <Pagination page={page} onChange={setPage} total={pageCount}/>
-  </>
- )
-}
+          </Card.Section>
+          <Text mt="sm">{item.text}</Text>
+          <Text align="right">Difficulty:{item.difficulty}</Text>
+        </Card>
+      ))}
+      <Pagination page={page} onChange={setPage} total={pageCount} />
+    </>
+  );
+};
 
 export default List;
