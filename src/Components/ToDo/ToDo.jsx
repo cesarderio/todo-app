@@ -6,6 +6,8 @@ import { Button, Card, createStyles, Grid, Group, Slider, Text, TextInput } from
 import List from "../List";
 import { SettingsContext } from "../../Context/Settings/index.jsx";
 import Auth from "../Auth/index.jsx";
+import { AuthContext } from "../../Context/Auth/index.jsx";
+import axios from "../../hooks/axios.js";
 
 const useStyle = createStyles((theme) => ({
   todoHeader: {
@@ -28,7 +30,8 @@ const useStyle = createStyles((theme) => ({
 const ToDo = () => {
   // const { showComplete, setShowComplete, pageItems, setPageItems, sort, setSort, saveLocally } =
   // useContext(SettingsContext);
-  const { setShow, showComplete, pageItems, sort, saveLocally } = useContext(SettingsContext);
+  const { setShow, showComplete, pageItems, sort } = useContext(SettingsContext);
+  // const { can } = useContext(AuthContext);
   console.log("todo: ", showComplete, pageItems, sort);
 
   const [defaultValues] = useState({
@@ -36,19 +39,67 @@ const ToDo = () => {
   });
   const [list, setList] = useState([]);
   const [incomplete, setIncomplete] = useState([]);
+  // const { handleChange, handleSubmit } = useForm(addItem, defaultValues);
   const { handleChange, handleSubmit } = useForm(addItem, defaultValues);
 
-  function addItem(item) {
-    item.id = uuid();
-    item.complete = false;
-    console.log(item);
+
+
+    // const ApiList = async (username, password) => {
+  //   let ApiListConfig = {
+  //     baseURL: "https://api-js401.herokuapp.com",
+  //     url: "/get",
+  //     method: "get",
+  //     auth: { username, password },
+  //   };
+  // let response = await axios(ApiListConfig)
+  // }
+  //  addItem = async(item){
+  //   let addItemConfig = {
+  //     baseURL: "https://api-js401.herokuapp.com/api/v1/todo",
+  //     url: "/post",
+  //     method: "post",
+  //     auth: { username, password },
+  //   }
+  //   let response = await axios.post(addItemConfig);
+  // }
+
+  function addItem(item, username, password) {
+        let addItemConfig = {
+      baseURL: "https://api-js401.herokuapp.com/api/v1/todo",
+      url: "/post",
+      method: "post",
+      auth: { username, password },
+    }
+    let response = axios.post(addItemConfig);
+  // }
+    // return axios.post()
+  //   item.id = uuid();
+  //   item.complete = false;
+  //   console.log(item);
     setList([...list, item]);
   }
-
+  // function deleteItem(id, username, password){
+  //   let deleteItemConfig = {
+  //     baseURL: "https://api-js401.herokuapp.com/api/v1/todo",
+  //     url: "/id",
+  //     method: "delete",
+  //     auth: { username, password },
+  //   }
+  //   let response = axios.delete(deleteItemConfig);
+  // }
   function deleteItem(id) {
     const items = list.filter((item) => item.id !== id);
     setList(items);
   }
+  // function toggleComplete(id, username, password){
+  //   let toggleConfig = {
+  //     baseURL: "https://api-js401.herokuapp.com/api/v1/todo",
+  //     url: "/id",
+  //     method: "put",
+  //     auth: { username, password },
+  //   }
+  //   let response = axios.put(toggleConfig)
+  // }
 
   function toggleComplete(id) {
     const items = list.map((item) => {
@@ -57,7 +108,6 @@ const ToDo = () => {
       }
       return item;
     });
-
     setList(items);
   }
 
@@ -71,6 +121,7 @@ const ToDo = () => {
   }, [list]);
 
   const { classes } = useStyle();
+  // const { login, logout, user } = useContext(AuthContext);
 
   // const handleSubmit = (e) => {
   //   e.preventDefault();
@@ -85,7 +136,7 @@ const ToDo = () => {
       </h1>
       <Group>
         <Grid style={{ width: "80%", margin: "auto" }}>
-          <Auth>
+          <Auth capability='create'>
             <Grid.Col xs={12} sm={4}>
               <Card withBorder p="sm">
                 <form className={classes.todoForm} onSubmit={handleSubmit}>
@@ -120,7 +171,7 @@ const ToDo = () => {
             </Grid.Col>
             <Grid.Col xs={12} sm={8}>
               {/* <Card withBorder></Card> */}
-              <List w="50%" list={list} toggleComplete={toggleComplete} />
+              <List  list={list} toggleComplete={toggleComplete} />
             </Grid.Col>
           </Auth>
         </Grid>

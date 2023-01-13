@@ -25,13 +25,13 @@ const NavBar = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const { login, logout, user } = useContext(AuthContext);
-console.log('user', user)
+  // const { login, logout, user } = useContext(AuthContext);
+// console.log('user', user)
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    login(username, password);
-  };
+  // const handleLogin = (e) => {
+  //   e.preventDefault();
+  //   login(username, password);
+  // };
 
   return (
     <>
@@ -46,18 +46,6 @@ console.log('user', user)
         </Group>
         <Group position="right">
           <Login />
-          {/* <form onSubmit={handleLogin}>
-            <label>
-              Username
-              <input onChange={(e) => setUsername(e.target.value)} />
-            </label>
-            <label>
-              Password
-              <input onChange={(e) => setPassword(e.target.value)} />
-            </label>
-            <Button type="submit">Login</Button>
-          </form>
-          <Button onClick={logout}>Logout</Button> */}
         </Group>
       </Group>
     </>

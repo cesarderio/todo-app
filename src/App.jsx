@@ -6,7 +6,7 @@ import ToDo from "./Components/ToDo/ToDo.jsx";
 // import Home from "./Components/HomeRoute";
 // import Settings from "./Components/SettingsRoute";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import SettingsForm from "./Components/SettingsForm"
+import SettingsForm from "./Components/SettingsForm";
 import Auth from "./Components/Auth";
 
 const App = () => {
@@ -14,10 +14,12 @@ const App = () => {
     <>
       <BrowserRouter>
         <NavBar />
-        <Routes>
-          <Route path="/" element={<ToDo />} />
-          <Route path="/settings" element={<SettingsForm />} />
-        </Routes>
+        {/* <Auth> */}
+          <Routes>
+            <Route path="/" element={<ToDo />} />
+            <Route path="/settings" element={<SettingsForm />} />
+          </Routes>
+        {/* </Auth> */}
       </BrowserRouter>
       <Auth capability="read">
         <p>I can read</p>
