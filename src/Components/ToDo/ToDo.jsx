@@ -23,14 +23,12 @@ const useStyle = createStyles((theme) => ({
   todoForm: {
     marginBottom: theme.spacing.md,
     marginTop: theme.spacing.xl,
-    // padding: theme.spacing.md,
   },
 }));
 
 const ToDo = () => {
-  // const { showComplete, setShowComplete, pageItems, setPageItems, sort, setSort, saveLocally } =
-  // useContext(SettingsContext);
-  const { setShow, showComplete, pageItems, sort } = useContext(SettingsContext);
+  const { classes } = useStyle();
+  const { showComplete, pageItems, sort } = useContext(SettingsContext);
   // const { can } = useContext(AuthContext);
   console.log("todo: ", showComplete, pageItems, sort);
 
@@ -39,75 +37,63 @@ const ToDo = () => {
   });
   const [list, setList] = useState([]);
   const [incomplete, setIncomplete] = useState([]);
-  // const { handleChange, handleSubmit } = useForm(addItem, defaultValues);
   const { handleChange, handleSubmit } = useForm(addItem, defaultValues);
 
-  // const ApiList = async (username, password) => {
-  //   let ApiListConfig = {
-  //     baseURL: "https://api-js401.herokuapp.com",
-  //     url: "/get",
-  //     method: "get",
-  //     auth: { username, password },
-  //   };
-  // let response = await axios(ApiListConfig)
-  // }
-  //  addItem = async(item){
-  //   let addItemConfig = {
-  //     baseURL: "https://api-js401.herokuapp.com/api/v1/todo",
-  //     url: "/post",
-  //     method: "post",
-  //     auth: { username, password },
-  //   }
-  //   let response = await axios.post(addItemConfig);
-  // }
+  async function addItem(item) {
+    item.complete = false;
 
-  function addItem(item, username, password) {
-    let addItemConfig = {
-      baseURL: "https://api-js401.herokuapp.com/api/v1/todo",
-      url: "/post",
+    const addItemConfig = {
+      baseURL: "https://api-js401.herokuapp.com/api/v1",
+      url: "/todo",
       method: "post",
-      auth: { username, password },
+      data: item,
     };
-    let response = axios.post(addItemConfig);
-    // }
-    // return axios.post()
-    //   item.id = uuid();
-    //   item.complete = false;
-    //   console.log(item);
-    setList([...list, item]);
+    const response = await axios(addItemConfig);
+    setList([...list, response.data]);
   }
-  // function deleteItem(id, username, password){
-  //   let deleteItemConfig = {
-  //     baseURL: "https://api-js401.herokuapp.com/api/v1/todo",
-  //     url: "/id",
-  //     method: "delete",
-  //     auth: { username, password },
-  //   }
-  //   let response = axios.delete(deleteItemConfig);
-  // }
-  function deleteItem(id) {
-    const items = list.filter((item) => item.id !== id);
-    setList(items);
+
+  async function deleteItem(id){
+    const deleteItemConfig = {
+      baseURL: "https://api-js401.herokuapp.com/api/v1",
+      url: `/todo/${id}`,
+      method: "delete",
+
+    }
+    const response = await axios(deleteItemConfig);
+    getList();
   }
-  // function toggleComplete(id, username, password){
-  //   let toggleConfig = {
-  //     baseURL: "https://api-js401.herokuapp.com/api/v1/todo",
-  //     url: "/id",
-  //     method: "put",
-  //     auth: { username, password },
-  //   }
-  //   let response = axios.put(toggleConfig)
+  async function toggleComplete(item){
+    const complete = !item.complete;
+    const toggleConfig = {
+      baseURL: "https://api-js401.herokuapp.com/api/v1",
+      url: `/todo/${item._id}`,
+      method: "put",
+      data: {...item, complete }
+    }
+    const response = await axios(toggleConfig)
+    getList();
+  }
+
+  // function toggleComplete(id) {
+  //   const items = list.map(item => {
+  //     if (item._id === id) {
+  //       item.complete = !item.complete;
+  //     }
+  //     return item;
+  //   });
+  //   setList(items);
   // }
 
-  function toggleComplete(id) {
-    const items = list.map((item) => {
-      if (item.id === id) {
-        item.complete = !item.complete;
-      }
-      return item;
-    });
-    setList(items);
+
+async function getList() {
+  const config = {
+    baseURL: "https://api-js401.herokuapp.com/api/v1",
+    url: "/todo",
+    method: "get",
   }
+  let response = await axios(config);
+  setList(response.data.results);
+}
 
   useEffect(() => {
     let incompleteCount = list.filter((item) => !item.complete).length;
@@ -118,14 +104,17 @@ const ToDo = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [list]);
 
-  const { classes } = useStyle();
-  // const { login, logout, user } = useContext(AuthContext);
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   setShow(true)
-  //   saveLocally();
-  // };
+  useEffect(() => {
+    ( async() => {
+      const config = {
+        baseURL: "https://api-js401.herokuapp.com/api/v1",
+        url: "/todo",
+        method: "get",
+      }
+      let response = await axios(config);
+      setList(response.data.results);
+    })()
+  }, []);
 
   return (
     <>

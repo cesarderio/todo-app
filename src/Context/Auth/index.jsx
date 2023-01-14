@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
 import axios from "axios";
+import cookie from 'react-cookies';
 
 // const testUsers = {
 //   Admininistrator: {
@@ -46,7 +47,8 @@ const AuthProvider = ({ children }) => {
       if (validUser) {
         setUser(validUser);
         setIsLoggedIn(true);
-        console.log("I am logged in");
+        cookie.save('auth', token);
+        // console.log("I am logged in");
       }
     } catch (e) {
       setError(e);
@@ -86,7 +88,15 @@ const AuthProvider = ({ children }) => {
   const logout = () => {
     setUser({});
     setIsLoggedIn(false);
+    cookie.remove('auth');
   };
+
+  useEffect(() => {
+    let token = cookie.load('auth');
+    if(token){
+      validateToken(token)
+    }
+  }, []);
 
   const values = {
     user,

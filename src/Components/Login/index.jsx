@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Button, PasswordInput, TextInput } from "@mantine/core";
+import { Button, TextInput } from "@mantine/core";
 import { If, Then, Else } from "react-if";
 import { AuthContext } from "../../Context/Auth";
 

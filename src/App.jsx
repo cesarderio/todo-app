@@ -7,7 +7,7 @@ import ToDo from "./Components/ToDo/ToDo.jsx";
 // import Settings from "./Components/SettingsRoute";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SettingsForm from "./Components/SettingsForm";
-import Auth from "./Components/Auth";
+
 import { When } from "react-if";
 import { AuthContext } from "./Context/Auth";
 import Footer from "./Components/Footer";

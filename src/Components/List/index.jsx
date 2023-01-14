@@ -1,38 +1,25 @@
-import { Badge, Button, Card, CloseButton, Group, Pagination, Text } from "@mantine/core";
+import { Badge, Card, CloseButton, Group, Pagination, Text } from "@mantine/core";
 import { useContext, useState } from "react";
 import { SettingsContext } from "../../Context/Settings";
-import { createStyles } from "@mantine/core";
 import { Else, If, Then } from "react-if";
 import { AuthContext } from "../../Context/Auth";
 import Auth from "../Auth";
-
-const useStyle = createStyles((theme) => ({
-  listStyle: {
-    padding: theme.spacing.sm,
-    // margin: theme.spacing.md,
-    // fontSize: theme.fontSizes.sm,
-  },
-}));
 
 const List = ({ list, toggleComplete, deleteItem }) => {
   const { can, isLoggedIn } = useContext(AuthContext);
   const { showComplete, pageItems } = useContext(SettingsContext);
   const [page, setPage] = useState(1);
-
   // pagination
   const listToRender = showComplete ? list : list.filter((item) => !item.complete);
   const listStart = pageItems * (page - 1);
   const listEnd = listStart + pageItems;
   const pageCount = Math.ceil(listToRender.length / pageItems);
-
   const displayList = listToRender.slice(listStart, listEnd);
-
-  const { classes } = useStyle();
 
   return (
     <>
       {displayList.map(item => (
-        <Card key={item.id} withBorder shadow="md" mb="sm">
+        <Card key={item._id} withBorder shadow="md" mb="sm">
           <Card.Section withBorder>
             <Group position="apart">
               <Group>
@@ -41,7 +28,7 @@ const List = ({ list, toggleComplete, deleteItem }) => {
                     <Badge
                       color={item.complete ? "red" : "green"}
                       variant="filled"
-                      onClick={() => toggleComplete(item.id)}
+                      onClick={() => toggleComplete(item)}
                       m="3px">
                       {item.complete ? "Complete" : "Pending"}
                     </Badge>
@@ -58,9 +45,7 @@ const List = ({ list, toggleComplete, deleteItem }) => {
                 <Text>{item.assignee}</Text>
               </Group>
               <Auth capability="delete">
-
-                  <CloseButton title="Close Todo Item" onClick={() => deleteItem(item.id)} />
- 
+                  <CloseButton title="Close Todo Item" onClick={() => deleteItem(item._id)} />
               </Auth>
             </Group>
           </Card.Section>
