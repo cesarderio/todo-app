@@ -42,16 +42,3 @@ const Login = () => {
 };
 
 export default Login;
-
-/* <form onSubmit={handleLogin}>
-            <label>
-              Username
-              <input onChange={(e) => setUsername(e.target.value)} />
-            </label>
-            <label>
-              Password
-              <input onChange={(e) => setPassword(e.target.value)} />
-            </label>
-            <Button type="submit">Login</Button>
-          </form>
-          <Button onClick={logout}>Logout</Button> */

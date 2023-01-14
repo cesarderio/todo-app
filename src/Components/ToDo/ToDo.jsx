@@ -1,12 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import useForm from "../../hooks/form.js";
-// import TodoHeader from "../TodoHeader/index.jsx";
-import { v4 as uuid } from "uuid";
 import { Button, Card, createStyles, Grid, Group, Slider, Text, TextInput } from "@mantine/core";
 import List from "../List";
 import { SettingsContext } from "../../Context/Settings/index.jsx";
 import Auth from "../Auth/index.jsx";
-import { AuthContext } from "../../Context/Auth/index.jsx";
 import axios from "../../hooks/axios.js";
 
 const useStyle = createStyles((theme) => ({
@@ -60,6 +57,7 @@ const ToDo = () => {
 
     }
     const response = await axios(deleteItemConfig);
+    console.log('delete: ', response.data);
     getList();
   }
   async function toggleComplete(item){
@@ -71,6 +69,7 @@ const ToDo = () => {
       data: {...item, complete }
     }
     const response = await axios(toggleConfig)
+    console.log('update: ', response.data);
     getList();
   }
 
